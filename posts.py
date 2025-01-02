@@ -1,4 +1,5 @@
-from mongoengine import Document, StringField, DictField, ListField, DateTimeField, EmbeddedDocument, EmbeddedDocumentField, ObjectIdField
+from mongoengine import Document, StringField, DictField, ListField, DateTimeField, EmbeddedDocument, \
+    EmbeddedDocumentField, ObjectIdField, SequenceField
 
 POST_STATUS = ('pending', 'published', 'deleted', 'draft', )
 
@@ -15,7 +16,8 @@ class PostCategory(EmbeddedDocument):
 
 
 class Posts(Document):
-    title = StringField()
+    post_id = SequenceField()
+    title =StringField(db_field='blog-title-test')
     url = StringField()
     content = StringField()
     metatag = EmbeddedDocumentField(PostMetatag)

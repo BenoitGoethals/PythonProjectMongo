@@ -1,7 +1,8 @@
-from mongoengine import Document, StringField, EmailField
+from mongoengine import Document, StringField, EmailField, SequenceField
 
 
 class User(Document):
+    user_id = SequenceField(primary_key=True)
     email = EmailField(required=True, unique=True)
     first_name = StringField(max_length=50)
     last_name = StringField(max_length=50)

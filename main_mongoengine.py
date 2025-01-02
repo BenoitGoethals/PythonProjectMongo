@@ -11,6 +11,10 @@ password = os.getenv("MONGODB_PWD")
 connection_string = f"mongodb+srv://benoitgoethals:{password}@cluster0.ds9qs.mongodb.net/"
 connect(db='test_user', host=connection_string)
 
+User.drop_collection()
+Posts.drop_collection()
+
+
 try:
     user = User(email='test@email.com')
     user.first_name = 'Paris'
@@ -62,3 +66,30 @@ post.authors.append('5ea3f219d65038bc607f70f5')
 post.authors.append('5ea3f21e7515c00ee4abaec8')
 
 post.save()
+try:
+    post = Posts.objects.get(pk="5ea3f264290e1c5733baa7b7")
+
+    cat_inx = 1
+
+    post_category = PostCategory()
+    post_category.id = '5ea3f6cd34d222091bdae306'
+    post_category.title = 'new push category title here'
+
+    update_dict = {
+        'set__metatag__title': 'new title changed',  # $set.metatag.title
+        f'set__categorys__{cat_inx}__title': 'new category title',  # $set.categorys.0.title
+        'push__authors': '5ea3f641e5e3bdda84df7269',  # $push.authors
+    }
+    post.update(**update_dict)
+
+    update_dict = {
+        'push__categorys': post_category,  # $push.categorys
+    }
+    post.update(**update_dict)
+
+    post.authors.pop(2)
+
+
+    post.save()
+except Exception as e:
+    print('Post not found')

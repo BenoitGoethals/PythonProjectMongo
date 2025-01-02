@@ -3,4 +3,5 @@
   <component name="Black">
     <option name="sdkName" value="PythonProject3" />
   </component>
+  <component name="ProjectRootManager" version="2" project-jdk-name="PythonProjectMongo" project-jdk-type="Python SDK" />
 </project>
